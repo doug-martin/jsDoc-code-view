@@ -9,6 +9,7 @@ function Link() {
 	this.innerName = "";
 	this.classLink = false;
 	this.targetName = "";
+    this.cssClass = "";
 	
 	this.target = function(targetName) {
 		if (defined(targetName)) this.targetName = targetName;
@@ -22,6 +23,10 @@ function Link() {
 		if (defined(text)) this.text = text;
 		return this;
 	}
+    this.withCssClass = function(text) {
+        if (defined(text)) this.cssClass = text;
+        return this;
+    }
 	this.toSrc = function(filename) {
 		if (defined(filename)) this.src = filename;
 		return this;
@@ -147,7 +152,7 @@ Link.prototype._makeSymbolLink = function(alias) {
 		JSDOC.PluginManager.run("onSymbolLink", link);
 	}
 	
-	return "<a href=\""+link.linkPath+link.linkInner+"\""+target+">"+link.linkText+"</a>";
+	return "<a href=\""+link.linkPath+link.linkInner+"\""+target+" class=\"" + this.cssClass +"\" >"+link.linkText+"</a>";
 }
 
 /** Create a link to a source file. */
@@ -159,7 +164,7 @@ Link.prototype._makeSrcLink = function(srcFilePath) {
 	var outFilePath = Link.base + publish.conf.srcDir + srcFile + publish.conf.ext;
 
 	if (!this.text) this.text = FilePath.fileName(srcFilePath);
-	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
+	return "<a href=\""+outFilePath+"\""+target+" class=\"" + this.cssClass +"\">"+this.text+"</a>";
 }
 
 /** Create a link to a source file. */
@@ -169,5 +174,5 @@ Link.prototype._makeFileLink = function(filePath) {
 	var outFilePath =  Link.base + filePath;
 
 	if (!this.text) this.text = filePath;
-	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
+	return "<a href=\""+outFilePath+"\""+target+" class=\"" + this.cssClass +"\">"+this.text+"</a>";
 }

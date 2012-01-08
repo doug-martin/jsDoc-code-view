@@ -30,3 +30,7 @@ JSDOC.Util.dir = function(path) {
 	var nameStart = Math.max(path.lastIndexOf("/")+1, path.lastIndexOf("\\")+1, 0);
 	return path.substring(0, nameStart-1);
 }
+
+
+
+

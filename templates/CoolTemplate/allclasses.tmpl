@@ -5,18 +5,54 @@
 
 
      <li>{+new Link().toFile("index.html").withText("<span>Classes</span>")+}</a>
-                <div>
-                    <ul>
-                    	<for each="thisClass" in="data">
-                    	<li>{!
-                    		if (thisClass.alias != "_global_") {
-                    			output += ""+new Link().toClass(thisClass.alias)+"";
-                    		}
-                    	!}</li>
-                    	</for>
-                </ul></div>
-            </li>
 
+                    {!
+var itemMap = {nameSpaceSymbol : null, subSymbols : {}};
+for(var i in data){
+    var item = data[i];
+    if(item.alias != "_global_"){
+        var curr = itemMap;
+        var parts = item.alias.split(".");
+        for(var i in parts){
+            var part = parts[i];
+            curr = curr.subSymbols;
+            if(!curr[part]){
+                curr[part] = {nameSpaceSymbol : null, subSymbols : {}};
+
+            }
+            curr = curr[part];
+        }
+        curr.nameSpaceSymbol = item;
+    }
+}
+
+var createItems = function (map){
+    var inited = false, ret = "";
+    for(var i in map){
+        !inited && (inited = true) && (ret += "<div><ul>");
+        var item = map[i];
+        var subText = createItems(item.subSymbols);
+        if(subText){
+             if(item.nameSpaceSymbol){
+                        ret += "<li>"+ new Link().toClass(item.nameSpaceSymbol.alias).withText("<span>" + i + "</span>").withCssClass("parent") + subText + "</li>";
+                    }
+                    else{
+                                   ret += "<li><a href='#' class='parent'><span>" + i + "</span></a>" + subText + "</li>";
+                            }
+        }else if(item.nameSpaceSymbol){
+            ret += "<li>"+ new Link().toClass(item.nameSpaceSymbol.alias).withText("<span>" + i + "</span>") + "</li>";
+        }
+    }
+    if(inited){
+     ret += "</ul></div>";
+    }
+    return ret;
+
+};
+output += createItems(itemMap.subSymbols);
+                    !}
+
+    </li>
 
 
 </ul>
