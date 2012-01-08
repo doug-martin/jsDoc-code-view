@@ -1,59 +1,56 @@
-<ul class="menu">
+<div class="menuContainerContent classMenu">
+    <div class="menuContainerTitle">Class Navigation</div>
+        <ul>
+            <li><span class='parentContainer'>{+new Link().toFile("index.html").withText("<span>All Classes</span>")+}</span></li>
+            <li><span class='parentContainer'>{+new Link().toFile("index.html").withText("<span>API</span>")+}</span></a>
+                {!
+                         var itemMap = {nameSpaceSymbol : null, subSymbols : {}};
+                         for(var i in data){
+                             var item = data[i];
+                             if(item.alias != "_global_"){
+                                 var curr = itemMap;
+                                 var parts = item.alias.split(".");
+                                 for(var i in parts){
+                                     var part = parts[i];
+                                     curr = curr.subSymbols;
+                                     if(!curr[part]){
+                                         curr[part] = {nameSpaceSymbol : null, subSymbols : {}};
 
-    <li>{+new Link().toFile("index.html").withText("<span>Class Index</span>")+}</li>
-    <li>{+new Link().toFile("files.html").withText("<span>File Index</span>")+}</li>
+                                     }
+                                     curr = curr[part];
+                                 }
+                                 curr.nameSpaceSymbol = item;
+                             }
+                         }
 
+                         var createItems = function (map){
+                             var inited = false, ret = "";
+                             for(var i in map){
+                                 !inited && (inited= true) && (ret += "<ul>");
+                                 var item = map[i];
+                                 var subText = createItems(item.subSymbols);
+                                 if(subText){
+                                      if(item.nameSpaceSymbol){
+                                                 ret += "<li class='parent'><span class='parentContainer'>"+ new Link().toClass(item.nameSpaceSymbol.alias).withText(i) + "</span>" + subText + "</li>";
+                                             }
+                                             else{
+                                                            ret += "<li class='parent'><span class='parentContainer'><a href='#'>" + i + "</a></span>" + subText + "</li>";
+                                                     }
+                                 }else if(item.nameSpaceSymbol){
+                                     ret += "<li><span class='nodeContainer'>"+ new Link().toClass(item.nameSpaceSymbol.alias).withText(i) + "</span></li>";
+                                 }
+                             }
+                             if(inited){
+                                 ret += "</ul>";
+                             }
+                             return ret;
 
-     <li>{+new Link().toFile("index.html").withText("<span>Classes</span>")+}</a>
+                         };
+                         output += createItems(itemMap.subSymbols);
+                !}
 
-                    {!
-var itemMap = {nameSpaceSymbol : null, subSymbols : {}};
-for(var i in data){
-    var item = data[i];
-    if(item.alias != "_global_"){
-        var curr = itemMap;
-        var parts = item.alias.split(".");
-        for(var i in parts){
-            var part = parts[i];
-            curr = curr.subSymbols;
-            if(!curr[part]){
-                curr[part] = {nameSpaceSymbol : null, subSymbols : {}};
-
-            }
-            curr = curr[part];
-        }
-        curr.nameSpaceSymbol = item;
-    }
-}
-
-var createItems = function (map){
-    var inited = false, ret = "";
-    for(var i in map){
-        !inited && (inited = true) && (ret += "<div><ul>");
-        var item = map[i];
-        var subText = createItems(item.subSymbols);
-        if(subText){
-             if(item.nameSpaceSymbol){
-                        ret += "<li>"+ new Link().toClass(item.nameSpaceSymbol.alias).withText("<span>" + i + "</span>").withCssClass("parent") + subText + "</li>";
-                    }
-                    else{
-                                   ret += "<li><a href='#' class='parent'><span>" + i + "</span></a>" + subText + "</li>";
-                            }
-        }else if(item.nameSpaceSymbol){
-            ret += "<li>"+ new Link().toClass(item.nameSpaceSymbol.alias).withText("<span>" + i + "</span>") + "</li>";
-        }
-    }
-    if(inited){
-     ret += "</ul></div>";
-    }
-    return ret;
-
-};
-output += createItems(itemMap.subSymbols);
-                    !}
-
-    </li>
-
-
+            </li>
+            <li><span class='parentContainer'>{+new Link().toFile("files.html").withText("<span>File</span>")+}</span></li>
 </ul>
-<hr />
+</div>
+</div>
