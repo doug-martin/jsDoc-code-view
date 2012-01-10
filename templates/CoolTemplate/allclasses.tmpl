@@ -1,8 +1,7 @@
-<div class="menuContainerContent classMenu">
-    <div class="menuContainerTitle">Class Navigation</div>
-        <ul>
-            <li><span class='parentContainer'>{+new Link().toFile("index.html").withText("<span>All Classes</span>")+}</span></li>
-            <li><span class='parentContainer'>{+new Link().toFile("index.html").withText("<span>API</span>")+}</span></a>
+
+            <li><span class='nodeContainer'>{+new Link().toFile("index.html").withText("<span>All Classes</span>")+}</span></li>
+            <li><span class='nodeContainer'>{+new Link().toFile("files.html").withText("<span>All Files</span>")+}</span></li>
+            <li class="parent"><span class='parentContainer'>{+new Link().toFile("index.html").withText("<span>API</span>")+}</span></a>
                 {!
                          var itemMap = {nameSpaceSymbol : null, subSymbols : {}};
                          for(var i in data){
@@ -50,7 +49,4 @@
                 !}
 
             </li>
-            <li><span class='parentContainer'>{+new Link().toFile("files.html").withText("<span>File</span>")+}</span></li>
-</ul>
-</div>
-</div>
+

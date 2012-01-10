@@ -132,22 +132,12 @@ function publish(symbolSet) {
     IO.mkPath((jsOut + "/chili").split("/"));
     IO.mkPath((cssOut).split("/"));
     if (out) {
-        IO.copyFile(template+"js/jquery.js", jsOut);
-        IO.copyFile(template+"js/jquery.menuTree.js", jsOut);
-        IO.copyFile(template+"js/menu.js", jsOut);
         IO.copyFile(template+"js/doc.js", jsOut);
         IO.copyFile(template+"js/chili/jquery.chili-2.2.js", jsOut + "/chili");
         IO.copyFile(template+"js/chili/recipes.js", jsOut + "/chili");
         IO.copyFile(template+"css/default.css", cssOut);
         IO.copyFile(template+"css/menu.css", cssOut);
         IO.copyFile(template+"css/class.css", cssOut);
-        IO.copyFile(template+"images/arrow.gif", imgOut);
-        IO.copyFile(template+"images/back.png", imgOut);
-        IO.copyFile(template+"images/header.gif", imgOut);
-        IO.copyFile(template+"images/header_active.gif", imgOut);
-        IO.copyFile(template+"images/header_bg.gif", imgOut);
-        IO.copyFile(template+"images/pix.gif", imgOut);
-        IO.copyFile(template+"images/pointer.gif", imgOut);
     }
 
 	fileindexTemplate = filesIndex = files = null;
